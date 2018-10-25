@@ -6,6 +6,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* background-image: linear-gradient(to top, #222222, #222428, #1f282e, #182c31, #123030); */
+  /* background-image: linear-gradient(to bottom, #222222, #222428, #1f282e, #182c31, #123030); */
+  background-image: linear-gradient(to left bottom, #4f5665, #3d4252, #2b3040, #1a1e2e, #0a0a1e);
+
+  background-attachment: fixed;
+}
+
+#root { 
 }
 
 code {

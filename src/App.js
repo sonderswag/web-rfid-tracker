@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Route } from 'react-router-dom';
+import styled from 'styled-components';
+import "react-table/react-table.css";
+import Nav from './Nav';
+import Main from './Main/Main';
 import './App.css';
+
+const Container = styled.div`
+  margin-top: 55px;
+`
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <React.Fragment>
+        <Nav />
+        <Container>
+          <Route path='/' component={Main} />
+        </Container>
+
+      </React.Fragment>
     );
   }
 }

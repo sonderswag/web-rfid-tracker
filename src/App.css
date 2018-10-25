@@ -11,11 +11,11 @@
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: blue;
 }
 
 .App-link {
@@ -30,3 +30,78 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* these are the even columns cells */
+.rt-thead .rt-tr .rt-th:nth-child(even),
+.rt-tbody .rt-tr-group .rt-tr .rt-td:nth-child(even) {
+  color: #23918f;
+}
+
+/* This is for filtering  */
+ .ReactTable .rt-thead.-filters input {
+  background-color: rgba(28, 28, 30);
+  border: 2px solid rgba(48, 48, 50);
+  justify-content: center;
+  margin-top: 0;
+  color: white;
+}
+
+/* this is header element for sorting ascending  */
+.ReactTable .rt-thead .rt-th.-sort-asc {
+  box-shadow: none;
+  border-top: 2px solid rgba(49, 144, 144,0.6);
+}
+/* this is when sorting is decending */
+.ReactTable .rt-thead .rt-th.-sort-desc {
+  box-shadow: none;
+  border-bottom: 2px solid rgba(49, 144, 144,0.6);
+}
+
+/* this is odd row when striped is selected  */
+.ReactTable.-striped .rt-tr.-odd {
+    background: rgba(0,0,0,0.1);
+}
+
+/* this is hovering over a table row */
+.ReactTable.-highlight .rt-tbody .rt-tr:not(.-padRow):hover {
+    background: #31909010;
+}
+
+/* This is focus on a header cell */
+.rt-thead .rt-tr .rt-th:focus {
+  outline:none;
+}
+
+/* This is hovering over a header cell */
+.rt-thead .rt-tr .rt-th:hover {
+  background: rgba(49, 144, 144,0.1);
+}
+
+/* This is the bottom bar */
+.pagination-bottom {
+  background-color: #222629;
+}
+
+/* This is for the two inputs at the bottom  */
+.ReactTable .-pagination input, .ReactTable .-pagination select {
+  background: #2c2c2d;
+  color: #198686;
+}
+
+/* Next and back buttons  */
+.ReactTable .-pagination .-btn {
+  background: #2c2c2d;
+  color: #198686;
+}
+
+/* This is expander arrow */
+.ReactTable .rt-expander:after {
+  border-top: 7px solid rgba(85, 171, 171,0.8);
+}
+
+
+.ReactTable .pagination-bottom .-center .select-wrap{
+  display: none;
+}
+
