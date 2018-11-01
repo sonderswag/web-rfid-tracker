@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Nav, Navbar, NavItem, Button } from 'react-bootstrap';
+import { NavLink, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Colors from './Colors';
 import Login from './components/Login';
+import colors from './Colors';
 
 const LeftNavbar = styled(Navbar)`
   .container {
@@ -16,14 +18,41 @@ const Logo = styled.img`
   height: 35px;
   margin: 0px;
   margin-right: 5px;
-  transform: translateY(-5px);
+  transform: translateY(-10px);
+  
 `
 
 const Row = styled.div`
   display: flex;
   flex-direction: row;
-  color: rgba(49, 144, 144);
   `
+
+const NavBox = styled(NavItem)`
+  text-decoration: none;
+  color: ${Colors.lightGrey};
+  
+  :hover {
+    color: ${Colors.lightGrey}80;
+    background-color: ${Colors.lightGrey}30; 
+    border-bottom: solid 2px ${colors.blue};
+  }
+`
+
+const ColorLink = styled(NavLink)`
+  text-decoration: none;
+  color: ${Colors.lightGrey};
+  font-size: 16px;
+  
+  :hover {
+    text-decoration: none;
+    color: ${Colors.lightGrey}80;
+    border-bottom: solid 2px ${Colors.blue};
+  }
+
+  :active {
+    color: ${Colors.blue};
+  }
+`
 
 export default class Banner extends Component {
   constructor(props) {
@@ -36,32 +65,31 @@ export default class Banner extends Component {
   render() {
     const { showLogin } = this.state;
     return (
-      <React.Fragment>
+      <Route render={({ history }) => (
         <LeftNavbar fixedTop inverse >
           <Navbar.Header >
-            <Navbar.Brand style={{ marginLeft: '5px'}}>
-              <Row >
-                <Logo src="/jwst.png" alt="" />
-                <a href="#home" style={{color: Colors.blue}}>JWST Personnel Locator</a>
-              </Row>
-            </Navbar.Brand>
+          <Navbar.Brand style={{ marginLeft: '5px'}}>
+          <Row onClick={() => history.push('/')} style={{color: Colors.blue, fontWeight: 'bold'}}>
+            <Logo src="/jwst.png" alt="" />
+            JWST Personnel Locator
+          </Row>
+          </Navbar.Brand>
           </Navbar.Header>
           <Nav>
-            <NavItem eventKey={1} href="#">
-              Link
-            </NavItem>
-            <NavItem eventKey={2} href="#">
-              Link
-            </NavItem>
+            <NavBox onClick={() => history.push('/')}>
+              Home
+            </NavBox>
+          </Nav>
+          <Nav>
+            <NavBox onClick={() => history.push('/manage')}>
+                Manage
+            </NavBox>
           </Nav>
           <Nav pullRight>
-            <NavItem eventKey={2}>
-              <Login show={showLogin} onClose={this.onLoginClose}/>
-            </NavItem>
+            <Login/>
           </Nav>
         </LeftNavbar>
-        
-      </React.Fragment>
+      )} />
     )
   }
 }

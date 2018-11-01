@@ -10,10 +10,23 @@ import {
   FormControl,
   HelpBlock,
   ControlLabel,
+  NavItem
 } from 'react-bootstrap';
 import styled from 'styled-components';
 import { AppContext } from '../AppProvider';
 import Color from '../Colors';
+
+const LoginButton = styled(NavItem)`
+  text-decoration: none;
+  color: ${Color.lightGrey};
+  font-size: 16px;
+  
+  :hover {
+    color: ${Color.lightGrey}80;
+    background-color: ${Color.lightGrey}30;
+    border-bottom: solid 2px ${Color.blue};
+  }
+`
 
 const ColorButton = styled(Button)`
   color: ${props => props.color};
@@ -103,13 +116,13 @@ class Login extends Component {
     return (
       <React.Fragment>
         {this.context.loginStatus ? 
-          <Button  bsStyle="link" onClick={this.handleLogOut}>
+          <LoginButton  onClick={this.handleLogOut}>
             Logout
-          </Button>
+          </LoginButton>
           :
-          <Button  bsStyle="link" onClick={this.handleFormShow}>
+          <LoginButton  onClick={this.handleFormShow}>
             Login
-          </Button>
+          </LoginButton>
         }
 
         <LoginModal show={show} onHide={this.handleFormClose}>
