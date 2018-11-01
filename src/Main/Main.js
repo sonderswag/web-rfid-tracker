@@ -79,8 +79,9 @@ export default class Main extends Component {
         className="-striped -highlight"
         filterable={true}
         sortable={false}
-          data={data}
-          columns={columns}
+        defaultPageSize={21}
+        data={data}
+        columns={columns}
         />
 
       </TableContainer>

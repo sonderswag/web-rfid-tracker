@@ -33,15 +33,6 @@ export default class Banner extends Component {
     }
   }
 
-  onLoginClick = (e) => {
-    console.log('main', e);
-    this.setState({showLogin: true});
-  }
-
-  onLoginClose = () => {
-    this.setState({showLogin: false});
-  }
-
   render() {
     const { showLogin } = this.state;
     return (
@@ -64,15 +55,12 @@ export default class Banner extends Component {
             </NavItem>
           </Nav>
           <Nav pullRight>
-            <Button onClick={this.onLoginClick}>
-              Link Right
-            </Button>
-            <NavItem eventKey={2} href="#">
-              Link Right
+            <NavItem eventKey={2}>
+              <Login show={showLogin} onClose={this.onLoginClose}/>
             </NavItem>
           </Nav>
         </LeftNavbar>
-        <Login show={showLogin} onClose={this.onLoginClose}/>
+        
       </React.Fragment>
     )
   }
