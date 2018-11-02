@@ -1,59 +1,71 @@
 import React, { Component } from 'react';
-import { Nav, Navbar, NavItem, Button } from 'react-bootstrap';
-import { NavLink, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Colors from './Colors';
 import Login from './components/Login';
-import colors from './Colors';
 
-const LeftNavbar = styled(Navbar)`
-  .container {
-    margin-left: 0;
-    margin-right: 0;
-    width: 100%;
-  }
+const NavContainer = styled.div`
+  height: 55px;
 `
 
-const Logo = styled.img`
-  height: 35px;
-  margin: 0px;
-  margin-right: 5px;
-  transform: translateY(-10px);
-  
-`
-
-const Row = styled.div`
+const NavBar = styled.div`
   display: flex;
-  flex-direction: row;
-  `
-
-const NavBox = styled(NavItem)`
-  text-decoration: none;
-  color: ${Colors.lightGrey};
-  
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  height: 55px;
+  justify-content: flex-start;
+  align-items: center;  
+  background-color: rgb(34, 34, 34);
+`
+const Logo = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
   :hover {
-    color: ${Colors.lightGrey}80;
-    background-color: ${Colors.lightGrey}30; 
-    border-bottom: solid 2px ${colors.blue};
+    opacity: .8;
   }
 `
 
-const ColorLink = styled(NavLink)`
-  text-decoration: none;
+const Title = styled.h1`
+  margin: 0px;
+  margin-left: 10px;
+  font-size: 20px;
+  color: ${Colors.blue};
+`
+
+export const NavLink = styled.a`
+  display: flex;
+  align-items: center;
+  padding: 0 10px 0 10px;
   color: ${Colors.lightGrey};
   font-size: 16px;
-  
   :hover {
-    text-decoration: none;
+    text-decoration: none;  
     color: ${Colors.lightGrey}80;
+    background-color: ${Colors.lightGrey}30;
     border-bottom: solid 2px ${Colors.blue};
   }
-
+  :visited:active,
   :active {
-    color: ${Colors.blue};
+    background-color: ${Colors.lightGrey}80;
   }
 `
 
+const NavList = styled.ul`
+  display: flex;
+  height: 100%;
+  margin: 0 20px 0 20px;
+  list-style-type: none;
+  & > li {
+    display: flex;
+    cursor: pointer;
+    margin-right: 20px;
+  }
+  & > li:last-of-type {
+    margin-right: 0px;
+  }
+`
 export default class Banner extends Component {
   constructor(props) {
     super(props);
@@ -66,30 +78,28 @@ export default class Banner extends Component {
     const { showLogin } = this.state;
     return (
       <Route render={({ history }) => (
-        <LeftNavbar fixedTop inverse >
-          <Navbar.Header >
-          <Navbar.Brand style={{ marginLeft: '5px'}}>
-          <Row onClick={() => history.push('/')} style={{color: Colors.blue, fontWeight: 'bold'}}>
-            <Logo src="/jwst.png" alt="" />
-            JWST Personnel Locator
-          </Row>
-          </Navbar.Brand>
-          </Navbar.Header>
-          <Nav>
-            <NavBox onClick={() => history.push('/')}>
-              Home
-            </NavBox>
-          </Nav>
-          <Nav>
-            <NavBox onClick={() => history.push('/manage')}>
-                Manage
-            </NavBox>
-          </Nav>
-          <Nav pullRight>
-            <Login/>
-          </Nav>
-        </LeftNavbar>
+          <NavContainer>
+            <NavBar>
+              <Logo>
+                <img src="/jwst.png" alt="" style={{ height: '35px'}}/>
+                <Title>JWST Personnel Locator</Title>
+              </Logo>
+              <NavList>
+                <li>
+                  <NavLink onClick={() => history.push('/')}>Home</NavLink>
+                </li>
+                <li>
+                  <NavLink onClick={() => history.push('/manage')}>Manage</NavLink>
+                </li>
+              </NavList>
+              <NavList style={{ marginLeft: 'auto'}}>
+                <li><Login /></li>
+              </NavList>
+
+            </NavBar>
+          </NavContainer>
       )} />
     )
   }
 }
+

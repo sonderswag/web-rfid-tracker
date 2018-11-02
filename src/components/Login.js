@@ -15,18 +15,7 @@ import {
 import styled from 'styled-components';
 import { AppContext } from '../AppProvider';
 import Color from '../Colors';
-
-const LoginButton = styled(NavItem)`
-  text-decoration: none;
-  color: ${Color.lightGrey};
-  font-size: 16px;
-  
-  :hover {
-    color: ${Color.lightGrey}80;
-    background-color: ${Color.lightGrey}30;
-    border-bottom: solid 2px ${Color.blue};
-  }
-`
+import { NavLink } from '../Nav';
 
 const ColorButton = styled(Button)`
   color: ${props => props.color};
@@ -116,13 +105,13 @@ class Login extends Component {
     return (
       <React.Fragment>
         {this.context.loginStatus ? 
-          <LoginButton  onClick={this.handleLogOut}>
+          <NavLink  onClick={this.handleLogOut}>
             Logout
-          </LoginButton>
+          </NavLink>
           :
-          <LoginButton  onClick={this.handleFormShow}>
+          <NavLink  onClick={this.handleFormShow}>
             Login
-          </LoginButton>
+          </NavLink>
         }
 
         <LoginModal show={show} onHide={this.handleFormClose}>

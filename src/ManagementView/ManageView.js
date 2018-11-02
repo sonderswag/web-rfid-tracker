@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 import { Panel } from 'react-bootstrap';
 import Colors from '../Colors';
+import AddPanel from './AddPanel';
 
 const Container = styled.div`
   display: flex;
@@ -16,7 +17,6 @@ const Row = styled.div`
   justify-content: space-around;
   height: ${props => props.height ? props.height : '%100'};
 `
-
 const CardButton = styled(Panel)`
   background-color: ${props => props.color ? props.color : 'white'};
   width: 30vw;
@@ -24,16 +24,12 @@ const CardButton = styled(Panel)`
   border-color: ${Colors.grey}40;
   border-width: 3px;
 `
-
-
 export default class ManageView extends Component {
   render() {
     return (
       <Container>
         <Row height='50%' style={{marginTop: '50px'}}>
-          <CardButton color={Colors.green}>
-            <Panel.Body style={{display: 'flex', width: '100%'}}>Panel content</Panel.Body>
-          </CardButton>
+          <AddPanel />
           <CardButton color={Colors.red}>
             <Panel.Body>Panel content</Panel.Body>
           </CardButton>

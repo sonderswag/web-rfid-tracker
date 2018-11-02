@@ -11,8 +11,18 @@ import './App.css';
 
 
 const Container = styled.div`
-  margin-top: 51px;
-  height: calc(100% - 51px);
+  clear: both;
+  overflow: hidden;
+`
+
+const Test = styled.div`
+  clear: both;
+  border: 1px solid red;
+  height: 30px;
+`
+
+const T2 = styled.div`
+  overflow: hidden;
 `
 
 class App extends Component {
@@ -20,13 +30,13 @@ class App extends Component {
   render() {
     return (
       <AppProvider>
-        <Nav />
-        <Container>
-          <Switch>
-            <Route path='/manage' component={ManageView} />
-            <Route path='/' component={Main} />
-          </Switch>
-        </Container>
+          <Nav />
+          <Container>
+            <Switch>
+              <Route path='/manage' component={ManageView} />
+              <Route path='/' component={Main} />
+            </Switch>
+          </Container>
       </AppProvider>
     );
   }
