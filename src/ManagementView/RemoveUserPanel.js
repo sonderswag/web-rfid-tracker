@@ -1,57 +1,19 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import { FaUserMinus } from 'react-icons/fa';
 import {
   Modal,
-  Popover,
-  OverlayTrigger,
-  Overlay,
   Button,
-  Tooltip,
   FormGroup,
   FormControl,
   HelpBlock,
   ControlLabel,
-  NavItem
 } from 'react-bootstrap';
-import styled from 'styled-components';
-import { AppContext } from '../AppProvider';
-import Color from '../Colors';
-import { NavLink } from '../Nav';
+import { ButtonPanel } from './ManageView';
+import Colors from '../Colors';
+import { FormModal, FormButton } from '../components/Login';
 
-export const FormButton = styled(Button)`
-  color: ${props => props.color};
-  background-color: ${Color.grey};
-  border-width: 2px;
-  border-color: ${props => props.color};
-
-  :hover {
-    color: ${Color.grey};
-    background-color: ${props => props.color}D0;
-    border-color: ${props => props.color}80;
-  }
-`
-
-export const FormModal = styled(Modal)`
-  color: ${Color.lightGrey};
-
-  & .modal-dialog .modal-content{
-    background-color: ${Color.grey};
-  }
-
-  & .modal-header {
-    color: ${Color.blue};
-    border-bottom-color: ${Color.blue};
-  }
-
-  & .modal-footer {
-    border-top-color: ${Color.blue};
-  }
-
-  & .close {
-    color: ${Color.blue};
-  }
-`
-
-class Login extends Component {
+export default class RemoveUserPanel extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
@@ -59,20 +21,6 @@ class Login extends Component {
       userName: '',
       password: '',
     };
-  }
-
-  handleLogOut = () => {
-    this.context.setLogin(false);
-  }
-
-  // NOTE: this needs to updated for real password checking
-  handleFormSubmit = () => {
-    const { userName, password } = this.state;
-    const { onLogin } = this.props;
-    if (userName === 'test' && password === 'test') {
-      this.handleFormClose();
-      this.context.setLogin(true);
-    }
   }
 
   handleFormClose = () => {
@@ -89,31 +37,16 @@ class Login extends Component {
   handlePassword = (e) => {
     this.setState({ password: e.target.value });
   }
-  
-  
-  getValidationState = () => {
-    const length = this.state.userName.length;
-    if (length > 3) return 'success';
-    else if (length > 1) return 'warning';
-    else if (length > 0) return 'error';
-    return null;
-  }
 
-  render() {   
+  render() {
     const { show, userName, password } = this.state;
-    console.log('login')
     return (
       <React.Fragment>
-        {this.context.loginStatus ? 
-          <NavLink  onClick={this.handleLogOut}>
-            Logout
-          </NavLink>
-          :
-          <NavLink  onClick={this.handleFormShow}>
-            Login
-          </NavLink>
-        }
-
+          <ButtonPanel color={Colors.red} onClick={this.handleFormShow}>
+            Remove User
+            <FaUserMinus
+              style={{marginTop: '10px', height: '80%', width:'80%'}}/>
+          </ButtonPanel>
         <FormModal show={show} onHide={this.handleFormClose}>
           <Modal.Header closeButton>
             <Modal.Title>Admin Login</Modal.Title>
@@ -122,7 +55,6 @@ class Login extends Component {
           <form>
             <FormGroup
               controlId="UserName"
-              validationState={this.getValidationState()}
             >
               <ControlLabel>UserName</ControlLabel>
               <FormControl
@@ -135,7 +67,6 @@ class Login extends Component {
             </FormGroup>
             <FormGroup
               controlId="Password"
-              validationState={this.getValidationState()}
             >
               <ControlLabel>Password</ControlLabel>
               <FormControl
@@ -152,14 +83,14 @@ class Login extends Component {
           </Modal.Body>
           <Modal.Footer>
             <FormButton
-              color={Color.green}
+              color={Colors.green}
               type="submit"
               onClick={this.handleFormSubmit}
             >
                 Sign in
             </FormButton>
             <FormButton
-              color={Color.red}
+              color={Colors.red}
               onClick={this.handleFormClose}
             >
               Close
@@ -167,10 +98,6 @@ class Login extends Component {
           </Modal.Footer>
         </FormModal>
       </React.Fragment>
-    );
+    )
   }
 }
-
-Login.contextType = AppContext;
-
-export default Login;

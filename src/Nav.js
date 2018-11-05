@@ -84,7 +84,7 @@ export default class Banner extends Component {
             <NavBar>
               <Logo onClick={() => history.push('/')}>
                 <img src="/jwst.png" alt="" style={{ height: '35px'}}/>
-                <Title>JWST Personnel Locator</Title>
+                <Title>Personnel Locator</Title>
               </Logo>
               <NavList>
                 <li>

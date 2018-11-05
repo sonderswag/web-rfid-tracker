@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import Colors from '../Colors';
 import { FaUserPlus, FaUserMinus, FaUserEdit  } from 'react-icons/fa';
 import GraphPanel from './GraphPanel';
-import TabelPanel from './TablePanel';
 import TablePanel from './TablePanel';
-// import AddPanel from './AddPanel';
+import AddUserPanel from './AddUserPanel';
+import RemoveUserPanel from './RemoveUserPanel';
+import EditUserPanel from './EditUserPanel';
 
 const PageContainer = styled.div`
   display: flex;
@@ -72,21 +73,9 @@ export default class ManageView extends Component {
     return (
       <PageContainer>
         <Row>
-          <ButtonPanel  color={Colors.green}>
-            Add User
-            <FaUserPlus
-              color={Colors.green}
-              style={{marginTop: '10px', height: '80%', width:'80%'}}/>
-          </ButtonPanel>
-          <ButtonPanel color={Colors.red} >
-            Remove User
-            <FaUserMinus
-              style={{marginTop: '10px', height: '80%', width:'80%'}}/>
-          </ButtonPanel><ButtonPanel color={Colors.orange} >
-            Edit User
-            <FaUserEdit
-              style={{marginTop: '10px', height: '80%', width:'80%'}}/>
-          </ButtonPanel>
+          <AddUserPanel />
+          <EditUserPanel />
+          <RemoveUserPanel />
         </Row>
         <Row>
           <GraphPanel />
