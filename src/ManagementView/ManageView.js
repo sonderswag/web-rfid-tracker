@@ -1,53 +1,98 @@
 import React, { Component } from 'react'
 import styled from 'styled-components';
-import { Panel } from 'react-bootstrap';
 import Colors from '../Colors';
-import AddPanel from './AddPanel';
+import { FaUserPlus, FaUserMinus, FaUserEdit  } from 'react-icons/fa';
+import GraphPanel from './GraphPanel';
+import TabelPanel from './TablePanel';
+import TablePanel from './TablePanel';
+// import AddPanel from './AddPanel';
 
-const Container = styled.div`
+const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+
 `
 
 const Row = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: space-between;
   height: ${props => props.height ? props.height : '%100'};
+  & > div {
+    margin: ${props => props.margin ? props.margin : '30px 10px 0 10px'};
+  }
 `
-const CardButton = styled(Panel)`
-  background-color: ${props => props.color ? props.color : 'white'};
-  width: 30vw;
-  height: 30vh;
-  border-color: ${Colors.grey}40;
-  border-width: 3px;
+
+const Panel = styled.div`
+  flex: 1;
+  border-radius: 3px;
+  background-color: ${Colors.grey};
+  border: 3px solid ${Colors.darkGrey}40;
 `
+
+export const ButtonPanel = styled(Panel)`
+  cursor: pointer;
+  user-select: none;
+  min-height: 100px;
+  height: 15vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => props.color ? props.color : Colors.grey}10;
+  border: 5px solid ${props => props.color ? props.color : Colors.grey}B0;
+  color: ${props => props.color ? props.color : Colors.grey};
+  padding: 0 10px 10px 10px;
+  font-size: 20px;
+  font-weight: bold;
+  :hover {
+    background-color: ${props => props.color ? props.color : Colors.grey}80;
+    color: ${Colors.grey} ;
+    & > svg {
+       fill: ${Colors.grey};
+     }
+  }
+  :visited:active,
+  :active {
+    background-color: ${props => props.color ? props.color : Colors.grey}E0;
+  }
+`
+
+export const LargePanel = styled(Panel)`
+  min-height: 400px;
+  height: 60vh;
+  min-width:400px;
+  margin-bottom: 20px;
+`
+
 export default class ManageView extends Component {
   render() {
     return (
-      <Container>
-        <Row height='50%' style={{marginTop: '50px'}}>
-          <AddPanel />
-          <CardButton color={Colors.red}>
-            <Panel.Body>Panel content</Panel.Body>
-          </CardButton>
-          <CardButton color={Colors.orange}>
-            <Panel.Body>Panel content</Panel.Body>
-          </CardButton>
+      <PageContainer>
+        <Row>
+          <ButtonPanel  color={Colors.green}>
+            Add User
+            <FaUserPlus
+              color={Colors.green}
+              style={{marginTop: '10px', height: '80%', width:'80%'}}/>
+          </ButtonPanel>
+          <ButtonPanel color={Colors.red} >
+            Remove User
+            <FaUserMinus
+              style={{marginTop: '10px', height: '80%', width:'80%'}}/>
+          </ButtonPanel><ButtonPanel color={Colors.orange} >
+            Edit User
+            <FaUserEdit
+              style={{marginTop: '10px', height: '80%', width:'80%'}}/>
+          </ButtonPanel>
         </Row>
-        <Row height='50%' style={{ marginTop: '40px' }}>
-          <Panel style={{width: '45vw', height: '50vh', background: Colors.grey}}>
-            <Panel.Heading>Panel heading without a title</Panel.Heading>
-            <Panel.Body>Panel content</Panel.Body>
-          </Panel>
-          <Panel style={{width: '45vw', height: '50vh', background: Colors.grey}}>
-            <Panel.Heading>Panel heading without a title</Panel.Heading>
-            <Panel.Body>Panel content</Panel.Body>
-          </Panel>
+        <Row>
+          <GraphPanel />
+          <TablePanel />
         </Row>
-      </Container>
+      </PageContainer>
     )
   }
 }

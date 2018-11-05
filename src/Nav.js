@@ -39,6 +39,7 @@ export const NavLink = styled.a`
   align-items: center;
   padding: 0 10px 0 10px;
   color: ${Colors.lightGrey};
+  user-select: none;
   font-size: 16px;
   :hover {
     text-decoration: none;  
