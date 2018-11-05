@@ -13,10 +13,7 @@ const TableContainer = styled.div`
 const TableOut = styled(ReactTable)`
   width: 100%;
   background: #22222270;
-  /* border: 2px solid red; */
-  border: 3px solid #222222;
   color: white;
-
   font-size: 15px;
 
 `

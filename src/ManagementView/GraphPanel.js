@@ -28,7 +28,7 @@ export default class GraphPanel extends Component {
       <LargePanel>
         <ResponsiveContainer>
           <AreaChart width={600} height={400} data={data}
-                margin={{top: 10, right: 30, left: 0, bottom: 0}}>
+                margin={{top: 10, right: 30, left: 0, bottom: 0}}  style={{color:Colors.lightGrey}}>
             <CartesianGrid strokeDasharray="3 3"/>
             <Legend verticalAlign="top" height={36}/>
             <XAxis dataKey="name"/>

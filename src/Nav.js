@@ -32,6 +32,7 @@ const Title = styled.h1`
   margin-left: 10px;
   font-size: 20px;
   color: ${Colors.blue};
+  user-select: none;
 `
 
 export const NavLink = styled.a`
@@ -81,7 +82,7 @@ export default class Banner extends Component {
       <Route render={({ history }) => (
           <NavContainer>
             <NavBar>
-              <Logo>
+              <Logo onClick={() => history.push('/')}>
                 <img src="/jwst.png" alt="" style={{ height: '35px'}}/>
                 <Title>JWST Personnel Locator</Title>
               </Logo>
