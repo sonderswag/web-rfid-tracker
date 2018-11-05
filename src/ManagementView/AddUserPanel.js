@@ -18,8 +18,10 @@ export default class AddUserPanel extends Component {
     super(props, context);
     this.state = {
       show: false,
-      userName: '',
-      password: '',
+      firstName: '',
+      LastName: '',
+      Id: '',
+      TIDs: ['ASDFADS', 'DAFADS', 'DAFADSF', 'DAFDAFSA'],
     };
   }
 
@@ -31,15 +33,25 @@ export default class AddUserPanel extends Component {
     this.setState({ show: true });
   }
   
-  handleUsername = (e) => {
-    this.setState({ userName: e.target.value });
-  }
-  handlePassword = (e) => {
-    this.setState({ password: e.target.value });
+  handleFirstName = (e) => {
+    this.setState({ firstName: e.target.value });
   }
 
+  handleLastName = (e) => {
+    this.setState({ lastName: e.target.value });
+  }
+
+  handleId = (e) => {
+    this.setState({ id: e.target.value });
+  }
+
+  generateOptions = (e) => {
+    return this.state.TIDs.map(id => <option value="select">{id}</option>);
+  }
+
+
   render() {
-    const { show, userName, password } = this.state;
+    const { show, firstName, lastName, id } = this.state;
     return (
       <React.Fragment>
         <ButtonPanel color={Colors.green} onClick={this.handleFormShow}>
@@ -50,35 +62,49 @@ export default class AddUserPanel extends Component {
         </ButtonPanel>
         <FormModal show={show} onHide={this.handleFormClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Admin Login</Modal.Title>
+            <Modal.Title>Add User</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           <form>
             <FormGroup
-              controlId="UserName"
+              controlId="FirstName"
             >
-              <ControlLabel>UserName</ControlLabel>
+              <ControlLabel>First Name</ControlLabel>
               <FormControl
                 type="text"
-                value={userName}
-                placeholder="Enter text"
-                onChange={this.handleUsername}
+                placeholder="Enter Name"
+                value={firstName}
+                onChange={this.handleFirstName}
               />
               <FormControl.Feedback />
             </FormGroup>
             <FormGroup
-              controlId="Password"
+              controlId="LastName"
             >
-              <ControlLabel>Password</ControlLabel>
+              <ControlLabel>Last Name</ControlLabel>
               <FormControl
-                type="password"
-                placeholder="Password"
-                value={password}
-                placeholder="Enter text"
-                onChange={this.handlePassword}
+                value={lastName}
+                placeholder="Enter Name"
+                onChange={this.handleLastName}
               />
               <FormControl.Feedback />
-              <HelpBlock>Validation is based on string length.</HelpBlock>
+            </FormGroup>
+            <FormGroup
+              controlId="User Id"
+            >
+              <ControlLabel>User Id</ControlLabel>
+              <FormControl
+                value={id}
+                placeholder="Enter id"
+                onChange={this.handleId}
+              />
+              <FormControl.Feedback />
+            </FormGroup>
+            <FormGroup controlId="formControlsSelect">
+              <ControlLabel>Select Unassigned TID</ControlLabel>
+              <FormControl componentClass="select" placeholder="select">
+                {this.generateOptions()}
+              </FormControl>
             </FormGroup>
           </form>
           </Modal.Body>
@@ -88,7 +114,7 @@ export default class AddUserPanel extends Component {
               type="submit"
               onClick={this.handleFormSubmit}
             >
-                Sign in
+                Submit 
             </FormButton>
             <FormButton
               color={Colors.red}

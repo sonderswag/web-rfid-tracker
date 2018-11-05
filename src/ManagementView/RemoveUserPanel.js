@@ -13,12 +13,24 @@ import { ButtonPanel } from './ManageView';
 import Colors from '../Colors';
 import { FormModal, FormButton } from '../components/Login';
 
+const NameContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  & > p:first-of-type {
+    margin-right: 30px;
+    width:200px;
+  }
+`
+
+const NameBlock = styled.p`
+  display: inline;
+`;
 export default class RemoveUserPanel extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       show: false,
-      userName: '',
+      userId: '',
       password: '',
     };
   }
@@ -31,15 +43,15 @@ export default class RemoveUserPanel extends Component {
     this.setState({ show: true });
   }
   
-  handleUsername = (e) => {
-    this.setState({ userName: e.target.value });
+  handleUserId = (e) => {
+    this.setState({ userId: e.target.value });
   }
   handlePassword = (e) => {
     this.setState({ password: e.target.value });
   }
 
   render() {
-    const { show, userName, password } = this.state;
+    const { show, userId, password } = this.state;
     return (
       <React.Fragment>
           <ButtonPanel color={Colors.red} onClick={this.handleFormShow}>
@@ -49,37 +61,27 @@ export default class RemoveUserPanel extends Component {
           </ButtonPanel>
         <FormModal show={show} onHide={this.handleFormClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Admin Login</Modal.Title>
+            <Modal.Title>Remove User</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           <form>
             <FormGroup
-              controlId="UserName"
+              controlId="UserId"
             >
-              <ControlLabel>UserName</ControlLabel>
+              <ControlLabel>User Id</ControlLabel>
               <FormControl
                 type="text"
-                value={userName}
+                value={userId}
                 placeholder="Enter text"
-                onChange={this.handleUsername}
+                onChange={this.handleUserId}
               />
               <FormControl.Feedback />
-            </FormGroup>
-            <FormGroup
-              controlId="Password"
-            >
-              <ControlLabel>Password</ControlLabel>
-              <FormControl
-                type="password"
-                placeholder="Password"
-                value={password}
-                placeholder="Enter text"
-                onChange={this.handlePassword}
-              />
-              <FormControl.Feedback />
-              <HelpBlock>Validation is based on string length.</HelpBlock>
             </FormGroup>
           </form>
+          <NameContainer>
+            <NameBlock>First Name:</NameBlock>
+            <NameBlock>Last Name:</NameBlock>
+          </NameContainer>
           </Modal.Body>
           <Modal.Footer>
             <FormButton
@@ -87,7 +89,7 @@ export default class RemoveUserPanel extends Component {
               type="submit"
               onClick={this.handleFormSubmit}
             >
-                Sign in
+                Delete
             </FormButton>
             <FormButton
               color={Colors.red}

@@ -44,10 +44,10 @@ export default class TablePanel extends Component {
     ]
    
     const columns = [{
-      Header: 'TID',
+      Header: 'Unassigned TID',
       accessor: 'name' // String-based value accessors!
     }, {
-      Header: 'Time',
+      Header: 'Update Time',
       accessor: 'age',
       Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
     },

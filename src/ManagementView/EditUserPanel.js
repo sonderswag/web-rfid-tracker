@@ -49,7 +49,7 @@ export default class EditUserPanel extends Component {
           </ButtonPanel>
         <FormModal show={show} onHide={this.handleFormClose}>
           <Modal.Header closeButton>
-            <Modal.Title>Admin Login</Modal.Title>
+            <Modal.Title>Edit User</Modal.Title>
           </Modal.Header>
           <Modal.Body>
           <form>
@@ -83,11 +83,11 @@ export default class EditUserPanel extends Component {
           </Modal.Body>
           <Modal.Footer>
             <FormButton
-              color={Colors.green}
+              color={Colors.orange}
               type="submit"
               onClick={this.handleFormSubmit}
             >
-                Sign in
+                Update
             </FormButton>
             <FormButton
               color={Colors.red}
