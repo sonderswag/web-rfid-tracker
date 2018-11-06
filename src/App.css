@@ -74,9 +74,9 @@
 }
 
 /* This is hovering over a header cell */
-.rt-thead .rt-tr .rt-th:hover {
+/* .rt-thead .rt-tr .rt-th:hover {
   background: rgba(49, 144, 144,0.1);
-}
+} */
 
 /* This is the bottom bar */
 .pagination-bottom {

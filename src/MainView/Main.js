@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import ReactTable from 'react-table';
 import styled from 'styled-components';
+import axios from  'axios';
+import Settings from '../Settings';
+import dataMonitor from '../dataRetrieval';
 
 const TableContainer = styled.div`
   display: flex;
@@ -20,53 +23,57 @@ const TableOut = styled(ReactTable)`
 
 `
 
+function toUpper(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export default class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+    }
+  }
+
+  componentWillMount() {
+    this.updateData();
+  }
+
+  componentDidUpdate() {
+    dataMonitor.subscribe(this.updateData);
+  }
+
+  updateData = () => {
+    axios.get(`${Settings.backend}/personnel/status`)
+    .then((res) => {
+      this.setState({data: res.data})
+    });
+  }
 
   generateLocationCell = row => (
     <span>
       <span style={{
-            color: row.value === 'Outside' ? '#ff2e00' : '#57d500',
+            color: row.value === 'outside' ? '#ff2e00' : '#57d500',
             transition: 'all .3s ease',
           }}
       >
             &#x25cf;
       </span>
 
-      {'  '}{row.value}
+      {'  '}{toUpper(row.value)}
     </span>
   );
 
   render() {
-    const data = [
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-    ]
-   
+
     const columns = [{
-      Header: 'Name',
-      accessor: 'name' // String-based value accessors!
+      Header: 'First Name',
+      accessor: 'firstName', // String-based value accessors!
+      Cell: props => <span className='number'>{toUpper(props.value)}</span> // Custom cell components!
     }, {
-      Header: 'Age',
-      accessor: 'age',
-      Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
+      Header: 'Last Name',
+      accessor: 'lastName',
+      Cell: props => <span className='number'>{toUpper(props.value)}</span> // Custom cell components!
     }, {
       Header: 'Location',
       accessor: 'location',
@@ -80,7 +87,7 @@ export default class Main extends Component {
         filterable={true}
         sortable={false}
         defaultPageSize={21}
-        data={data}
+        data={this.state.data}
         columns={columns}
         />
 
