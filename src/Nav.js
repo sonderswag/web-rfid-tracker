@@ -35,13 +35,14 @@ const Title = styled.h1`
   user-select: none;
 `
 
-export const NavLink = styled.a`
+export const NavLinkStyle = styled.a`
   display: flex;
   align-items: center;
   padding: 0 10px 0 10px;
   color: ${Colors.lightGrey};
   user-select: none;
   font-size: 16px;
+  border-bottom: ${props => props.active ? `solid 2px ${Colors.blue}` : 'none'};
   :hover {
     text-decoration: none;  
     color: ${Colors.lightGrey}80;
@@ -68,6 +69,36 @@ const NavList = styled.ul`
     margin-right: 0px;
   }
 `
+
+export class NavLink extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  handleClick = (e, history, test) => {
+    console.log(test);
+    const { onClick, to } = this.props;
+    console.log(history);
+    history.push(to);
+    onClick(e);
+  }
+
+  render() {
+    const { children, to } = this.props;
+
+    return (
+      <Route render={({ history, location }) => (
+        <NavLinkStyle active={location.pathname === to} onClick={(e) => this.handleClick(e, history, location)}>
+          {children}
+        </NavLinkStyle>
+      )} />
+    );
+  }
+}
+
+NavLink.defaultProps = {
+  onClick: () => {},
+}
 export default class Banner extends Component {
   constructor(props) {
     super(props);
@@ -88,10 +119,10 @@ export default class Banner extends Component {
               </Logo>
               <NavList>
                 <li>
-                  <NavLink onClick={() => history.push('/')}>Home</NavLink>
+                  <NavLink to="/">Home</NavLink>
                 </li>
                 <li>
-                  <NavLink onClick={() => history.push('/manage')}>Manage</NavLink>
+                  <NavLink to="/manage">Manage</NavLink>
                 </li>
               </NavList>
               <NavList style={{ marginLeft: 'auto'}}>
