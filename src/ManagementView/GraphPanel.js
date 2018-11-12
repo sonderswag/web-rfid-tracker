@@ -14,6 +14,7 @@ import {
 import { LargePanel } from './ManageView';
 import Colors from '../Colors';
 import Settings from '../Settings';
+import DataMonitor from '../dataRetrieval';
 
 export default class GraphPanel extends Component {
   constructor(props) {
@@ -27,6 +28,10 @@ export default class GraphPanel extends Component {
     this.updateData();
   }
 
+  componentDidMount() {
+    DataMonitor.subscribe(this.updateData);
+  }
+
   updateData = async () => {
     const res = await axios.get(`${Settings.backend}/log/hours`);
     console.log(res.data);
@@ -34,22 +39,21 @@ export default class GraphPanel extends Component {
     const newData = res.data.map((item) => {
       const data = {
         time: currentTime.subtract(1, 'hours').format('HH:mm'),
-        insideTID: [],
+        insideID: [],
         inside: 0,
-        outsideTID: [],
+        outsideID: [],
         outside: 0,
       };
 
       const inside = item.filter((el) => el._id === 'inside');
-      console.log(inside);
       if (inside.length !== 0) {
-        data.insideTID = inside[0].TID;
-        data.inside = inside[0].TID.length;
+        data.insideID = inside[0].ID;
+        data.inside = inside[0].ID.length;
       }
       const outside = item.filter((el) => el._id === 'outside');
       if (outside.length !== 0) {
-        data.outsideTID = outside[0].TID;
-        data.outside = outside[0].TID.length;
+        data.outsideID = outside[0].ID;
+        data.outside = outside[0].ID.length;
       }
       return data;
     })

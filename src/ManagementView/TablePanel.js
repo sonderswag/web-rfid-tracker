@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import ReactTable from 'react-table';
 import { LargePanel } from './ManageView';
+import Settings from '../Settings';
+import DataMonitor from '../dataRetrieval';
 
 const TableContainer = styled.div`
   display: flex;
@@ -19,36 +22,39 @@ const TableOut = styled(ReactTable)`
 `
 
 export default class TablePanel extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: [],
+    }
+  }
+
+  componentWillMount() {
+    this.updateData();
+  }
+  
+  componentDidMount() {
+    DataMonitor.subscribe(this.updateData);
+  }
+
+  updateData = async () => {
+    const res = await  axios.get(`${Settings.backend}/personnel/un-name`);
+    const newData = res.data.map((item) => ({
+      TID: item.TID,
+      updateTime: item.updateTime,
+    }))
+
+    this.setState({ data: newData });
+  }
+
   render() {
-    const data = [
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-      {name: 'Tanner Linsley', age: 26, location: 'Outside'},
-    ]
-   
     const columns = [{
       Header: 'Unassigned TID',
-      accessor: 'name' // String-based value accessors!
+      accessor: 'TID' // String-based value accessors!
     }, {
       Header: 'Update Time',
-      accessor: 'age',
+      accessor: 'updateTime',
       Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
     },
     ];
@@ -61,7 +67,7 @@ export default class TablePanel extends Component {
           filterable={true}
           sortable={false}
           defaultPageSize={21}
-          data={data}
+          data={this.state.data}
           columns={columns}
           />
 

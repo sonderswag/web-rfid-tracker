@@ -29,7 +29,7 @@ function DataMonitor() {
 
 const checkStatus = async (dm) => {
   const res = await axios.get(`http://localhost:8000/status`);
-  if (!dm.status || dm.status.log._id !== res.data.log._id || dm.status.personnel._id !== res.data.personnel._id) {
+  if (!dm.status || dm.status.time !== res.data.time) {
     dm.status = res.data;
     dm.fire(res.data);
   }

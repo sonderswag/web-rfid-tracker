@@ -16,6 +16,8 @@ import styled from 'styled-components';
 import { AppContext } from '../AppProvider';
 import Color from '../Colors';
 import { NavLink } from '../Nav';
+import { COPYFILE_FICLONE_FORCE } from 'constants';
+import colors from '../Colors';
 
 export const FormButton = styled(Button)`
   color: ${props => props.color};
@@ -38,18 +40,22 @@ export const FormModal = styled(Modal)`
   }
 
   & .modal-header {
-    color: ${Color.blue};
-    border-bottom-color: ${Color.blue};
+    color: ${props => props.color};
+    border-bottom-color: ${props => props.color};
   }
 
   & .modal-footer {
-    border-top-color: ${Color.blue};
+    border-top-color: ${props => props.color};
   }
 
   & .close {
-    color: ${Color.blue};
+    color: ${props => props.color};
   }
 `
+
+FormModal.defaultProps = {
+  color: Color.blue
+}
 
 class Login extends Component {
   constructor(props, context) {

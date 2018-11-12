@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { FaUserPlus, FA } from 'react-icons/fa';
+import { FaUserTag, FA } from 'react-icons/fa';
 import {
   Modal,
   Button,
@@ -37,18 +37,41 @@ MessageBox.defaultProps = {
   color: Colors.red,
 }
 
+const NameBox = styled.div`
+display: flex;
+justify-content: space-between;
+margin: 20px 5px 20px 5px;
+font-size: 20px;
+color: ${props => props.color};
+`
 
-export default class AddUserPanel extends Component {
+NameBox.defaultProps = {
+  color: Colors.green,
+}
+
+
+function checkFail(state) {
+    return state === 0;
+  }
+function checkSuccess(state) {
+    return state === 1;
+  }
+function resetStatus() {
+  return -1;
+}
+
+export default class EditTagPanel extends Component {
   constructor(props, context) {
     super(props, context);
     this.selectRef = React.createRef();
-    this.color = Colors.green;
+    this.color = Colors.blue;
     this.state = {
       show: false,
-      submitFail: false,
-      submitSuccess: false,
-      firstName: '',
-      lastName: '',
+      submitStatus: resetStatus(), // -1 neutral, 0 fail, 1 success 
+      searchStatus: resetStatus(), 
+
+      searchSuccess: false,
+      
       id: '',
       TIDs: [],
     };
@@ -70,31 +93,31 @@ export default class AddUserPanel extends Component {
   }
 
   handleFormSubmit = async () => {
-    const TID = this.selectRef.current.value;
-    const { firstName, lastName, id } = this.state;
-    const argument = `personnel/add/${TID}/?first=${firstName}&last=${lastName}&ID=${id}`;
-    axios.put(`${Settings.backend}/${argument}`)
-      .then((res) => { this.setState({ submitSuccess: true })})
-      .catch((err) => { this.setState({ submitFail: true }) })
+    // const TID = this.selectRef.current.value;
+    // const { firstName, lastName, id } = this.state;
+    // const argument = `personnel/add/${TID}/?first=${firstName}&last=${lastName}&ID=${id}`;
+    // axios.put(`${Settings.backend}/${argument}`)
+    //   .then((res) => { this.setState({ submitSuccess: true })})
+    //   .catch((err) => { this.setState({ submitFail: true }) })
     
   }
 
+  handleSearchId = async () => {
+    // this is where you search the dataBase to validate that UserID is valid
+    // If so then trigger name to pop up 
+
+    // If not then trigger error with validation function 
+
+  }
+
   handleFormClose = () => {
-    this.setState({ show: false, submitFail: false, submitSuccess: false });
+    this.setState({ show: false, submitStatus: resetStatus(), searchStatus: resetStatus()});
   }
 
   handleFormShow = () => {
     this.setState({ show: true });
   }
   
-  handleFirstName = (e) => {
-    this.setState({ firstName: e.target.value });
-  }
-
-  handleLastName = (e) => {
-    this.setState({ lastName: e.target.value });
-  }
-
   handleId = (e) => {
     this.setState({ id: e.target.value });
   }
@@ -118,65 +141,41 @@ export default class AddUserPanel extends Component {
   }
 
   validateId = () => {
-    const length = this.state.id.length
-    if (length > 2) return 'success';
-    else if (length < 2) return 'error';
+    const {id, searchStatus } = this.state;
+
+    if (checkFail(searchStatus)) return 'error';
+    if (id.length > 2) return 'success';
+    else if (id.length < 2) return 'error';
     return null;
   }
 
 
-
-
   render() {
-    const { show, firstName, lastName, id, submitFail, submitSuccess } = this.state;
+    const { show, searchStatus, id, submitStatus } = this.state;
     return (
       <React.Fragment>
         <ButtonPanel color={this.color} onClick={this.handleFormShow}>
-          Add User
-          <FaUserPlus
+          Edit User Tag
+          <FaUserTag
+            color={this.color}
             style={{marginTop: '10px', height: '80%', width:'80%'}}/>
         </ButtonPanel>
         <FormModal show={show} onHide={this.handleFormClose} color={this.color}>
           <Modal.Header closeButton>
-            <Modal.Title>Add User</Modal.Title>
+            <Modal.Title>Edit User</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          { submitFail && (
+          { checkFail(submitStatus) && (
             <MessageBox color={Colors.red}>
               Failed to add user, make sure ID is unique
             </MessageBox>
           )}
-          { submitSuccess && (
+          { checkSuccess(submitStatus) && (
             <MessageBox color={Colors.green}>
               Success!!
             </MessageBox>
           )}
           <form>
-            <FormGroup
-              controlId="FirstName"
-              validationState={this.validateFirst()}
-            >
-              <ControlLabel>First Name</ControlLabel>
-              <FormControl
-                type="text"
-                placeholder="Enter Name"
-                value={firstName}
-                onChange={this.handleFirstName}
-              />
-              <FormControl.Feedback />
-            </FormGroup>
-            <FormGroup
-              controlId="LastName"
-              validationState={this.validateLast()}
-            >
-              <ControlLabel>Last Name</ControlLabel>
-              <FormControl
-                value={lastName}
-                placeholder="Enter Name"
-                onChange={this.handleLastName}
-              />
-              <FormControl.Feedback />
-            </FormGroup>
             <FormGroup
               controlId="User Id"
               validationState={this.validateId()}
@@ -189,6 +188,16 @@ export default class AddUserPanel extends Component {
               />
               <FormControl.Feedback />
             </FormGroup>
+            <NameBox>
+              { checkSuccess(searchStatus) && 'Name: Christian Wagner'}
+              <FormButton
+              style={{marginLeft: 'auto'}}
+              color={this.color}
+              onClick={this.handleFormSubmit}
+            >
+                Search 
+            </FormButton>
+            </NameBox>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Select Unassigned TID</ControlLabel>
               <FormControl

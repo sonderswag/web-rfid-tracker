@@ -5,8 +5,9 @@ import { FaUserPlus, FaUserMinus, FaUserEdit  } from 'react-icons/fa';
 import GraphPanel from './GraphPanel';
 import TablePanel from './TablePanel';
 import AddUserPanel from './AddUserPanel';
+import EditTagPanel from './EditTagPanel';
 import RemoveUserPanel from './RemoveUserPanel';
-import EditUserPanel from './EditUserPanel';
+import EditNamePanel from './EditNamePanel';
 
 const PageContainer = styled.div`
   display: flex;
@@ -74,7 +75,8 @@ export default class ManageView extends Component {
       <PageContainer>
         <Row>
           <AddUserPanel />
-          <EditUserPanel />
+          <EditTagPanel />
+          <EditNamePanel />
           <RemoveUserPanel />
         </Row>
         <Row>
